@@ -95,6 +95,16 @@ app.include_router(notification_router)
 app.include_router(stripe_router)
 app.include_router(evolution_router)
 
+# VendaFlow: rotas de vendas
+from app.product_routes import router as product_router
+from app.order_routes import router as order_router
+from app.coupon_routes import router as coupon_router
+from app.gateway_routes import router as gateway_router
+app.include_router(product_router)
+app.include_router(order_router)
+app.include_router(coupon_router)
+app.include_router(gateway_router)
+
 # Webhooks de pagamento do VendaFlow
 from app.webhooks.payment_webhooks import router as payment_router
 app.include_router(payment_router)
