@@ -1,20 +1,15 @@
 """
 VendaFlow AI — Main Application
-FastAPI app principal com base EduFlow adaptada para vendas.
+FastAPI app principal com todas as rotas.
 """
 import os
-import asyncio
 from contextlib import asynccontextmanager
-from datetime import timezone, timedelta
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from dotenv import load_dotenv
 
 load_dotenv()
-
-SP_TZ = timezone(timedelta(hours=-3))
 
 # ── Scheduler ─────────────────────────────────────────────────────────────
 scheduler = AsyncIOScheduler(timezone="America/Sao_Paulo")
@@ -23,24 +18,20 @@ scheduler = AsyncIOScheduler(timezone="America/Sao_Paulo")
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Lifecycle: start/stop scheduler."""
-    # Abandoned cart check a cada 30 minutos
-    try:
-        from app.agents.abandoned_cart import process_abandoned_carts
-        scheduler.add_job(
-            process_abandoned_carts,
-            "interval",
-            minutes=30,
-            id="abandoned_cart_check",
-            replace_existing=True,
-        )
-    except Exception as e:
-        print(f"⚠️ Não foi possível registrar abandoned_cart job: {e}")
-
+    from app.agents.abandoned_cart import process_abandoned_carts
+    
+    scheduler.add_job(
+        process_abandoned_carts,
+        "interval",
+        minutes=30,
+        id="abandoned_cart_check",
+        replace_existing=True,
+    )
     scheduler.start()
     print("✅ VendaFlow AI iniciado | Scheduler ativo")
-
+    
     yield
-
+    
     scheduler.shutdown()
     print("🛑 VendaFlow AI encerrado")
 
@@ -70,34 +61,30 @@ app.add_middleware(
 
 
 # ── Rotas ─────────────────────────────────────────────────────────────────
-# Core EduFlow (base mantida)
-from app.routes import router
-from app.auth_routes import router as auth_router
-from app.tenant_routes import router as tenant_router, tenant_router as tenant_agent_router
-from app.kanban_routes import router as kanban_router
-from app.ai_routes import router as ai_router
-from app.webhook_routes import router as webhook_router, public_router as webhook_public_router
-from app.oauth_routes import router as oauth_router
-from app.notification_routes import router as notification_router
-from app.stripe_routes import router as stripe_router
-from app.evolution.routes import router as evolution_router
-
-app.include_router(router)
-app.include_router(auth_router)
-app.include_router(tenant_router)
-app.include_router(tenant_agent_router)
-app.include_router(kanban_router)
-app.include_router(ai_router)
-app.include_router(webhook_router)
-app.include_router(webhook_public_router)
-app.include_router(oauth_router)
-app.include_router(notification_router)
-app.include_router(stripe_router)
-app.include_router(evolution_router)
-
-# Webhooks de pagamento do VendaFlow
+from app.webhooks.evolution_routes import router as evolution_router
 from app.webhooks.payment_webhooks import router as payment_router
+
+app.include_router(evolution_router)
 app.include_router(payment_router)
+
+# TODO: Importar rotas conforme forem criadas
+# from app.routes.auth import router as auth_router
+# from app.routes.products import router as products_router
+# from app.routes.orders import router as orders_router
+# from app.routes.contacts import router as contacts_router
+# from app.routes.dashboard import router as dashboard_router
+# from app.routes.kanban import router as kanban_router
+# from app.routes.ai_config import router as ai_config_router
+# from app.routes.tenant import router as tenant_router
+
+# app.include_router(auth_router)
+# app.include_router(products_router)
+# app.include_router(orders_router)
+# app.include_router(contacts_router)
+# app.include_router(dashboard_router)
+# app.include_router(kanban_router)
+# app.include_router(ai_config_router)
+# app.include_router(tenant_router)
 
 
 @app.get("/")
