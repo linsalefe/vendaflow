@@ -1,0 +1,68 @@
+# ============ Python / Backend ============
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ============ Node / Frontend ============
+node_modules/
+.next/
+out/
+build/
+dist/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ============ Environment ============
+.env
+.env.local
+.env.development
+.env.production
+.env.*.local
+!.env.example
+
+# ============ IDE ============
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# ============ OS ============
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============ Database / Uploads ============
+*.db
+*.sqlite
+*.sqlite3
+uploads/
+media/
+
+# ============ Credentials / Secrets ============
+*-credentials.json
+google-credentials.json
+secrets/
+*.pem
+*.key
+
+# ============ Temporary ============
+tmp/
+temp/
+*.tmp
