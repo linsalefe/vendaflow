@@ -42,7 +42,7 @@ class Contact(Base):
     __tablename__ = "contacts"
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     tenant_id = Column(Integer, ForeignKey("tenants.id"), nullable=False)
-    wa_id = Column(String(20), nullable=False, index=True)
+    wa_id = Column(String(20), nullable=False, unique=True, index=True)
     name = Column(String(255), nullable=True)
     profile_picture_url = Column(String, nullable=True)
     lead_status = Column(String(30), default="novo")
@@ -270,7 +270,7 @@ class Schedule(Base):
     scheduled_time = Column(String(5), nullable=False)
     scheduled_at = Column(DateTime, nullable=False)
     status = Column(String(20), default="pending")
-    call_id = Column(Integer, ForeignKey("ai_calls.id"), nullable=True)
+    call_id = Column(Integer, nullable=True)  # Voice AI removido no VendaFlow
     channel_id = Column(Integer, ForeignKey("channels.id"), nullable=True)
     notes = Column(Text, nullable=True)
     created_at = Column(DateTime, server_default=func.now())
