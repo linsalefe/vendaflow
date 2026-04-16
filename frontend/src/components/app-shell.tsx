@@ -174,7 +174,7 @@ function SidebarNavContent({
         {/* Logo */}
         <div className="flex items-center gap-3">
           <Image
-            src="/logo-icon-color.png?v=2"
+            src="/logo-icon-color.svg"
             alt="VendaFlow"
             width={32}
             height={32}

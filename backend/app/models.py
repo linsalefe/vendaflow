@@ -407,18 +407,22 @@ class Tenant(Base):
         "dashboard": True,
         "conversas": True,
         "pipeline": True,
-        "financeiro": True,
-        "landing_pages": True,
-        "campanhas": True,
-        "relatorios": True,
+        "contatos": True,
+        "produtos": True,
+        "pedidos": True,
+        "cupons": True,
+        "gateways": True,
         "usuarios": True,
-        "automacoes": True,
-        "tarefas": True,
-        "voice_ai": False,
         "ai_whatsapp": True,
-        "voice_inbound": False,
         "ai_audio_response": False,
-        "agenda": True,
+        "ai_sales": True,
+        "catalog_whatsapp": True,
+        "abandoned_cart": True,
+        "post_sale_followup": True,
+        "upsell_engine": True,
+        "wholesale_pricing": True,
+        "digital_delivery": True,
+        "shipping_calc": False,
     })
 
     agent_plan_flags = Column(JSON, default={
@@ -448,12 +452,14 @@ class Tenant(Base):
         }
     })
     kanban_columns = Column(JSON, default=[
-    {"key": "novo", "label": "Novos Leads", "color": "#6366f1", "order": 0},
-    {"key": "em_contato", "label": "Em Contato", "color": "#f59e0b", "order": 1},
-    {"key": "qualificado", "label": "Qualificados", "color": "#8b5cf6", "order": 2},
-    {"key": "em_matricula", "label": "Em Matrícula", "color": "#06b6d4", "order": 3},
-    {"key": "matriculado", "label": "Matriculados", "color": "#10b981", "order": 4},
-    {"key": "perdido", "label": "Perdidos", "color": "#ef4444", "order": 5},
+        {"key": "novo", "label": "Novo Lead", "color": "#059669", "order": 0},
+        {"key": "interessado", "label": "Interessado", "color": "#eab308", "order": 1},
+        {"key": "carrinho", "label": "Carrinho Montado", "color": "#8b5cf6", "order": 2},
+        {"key": "link_enviado", "label": "Link Enviado", "color": "#0891b2", "order": 3},
+        {"key": "pago", "label": "Pago", "color": "#16a34a", "order": 4},
+        {"key": "enviado", "label": "Enviado", "color": "#3b82f6", "order": 5},
+        {"key": "entregue", "label": "Entregue", "color": "#10b981", "order": 6},
+        {"key": "perdido", "label": "Perdido", "color": "#dc2626", "order": 7},
     ])
 
     agent_pipeline_moves = Column(JSON, default={
