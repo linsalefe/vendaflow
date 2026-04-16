@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS channels (
 CREATE TABLE IF NOT EXISTS contacts (
     id BIGSERIAL PRIMARY KEY,
     tenant_id INTEGER NOT NULL REFERENCES tenants(id),
-    wa_id VARCHAR(20) NOT NULL,
+    wa_id VARCHAR(20) NOT NULL UNIQUE,
     name VARCHAR(255),
     email VARCHAR(255),
     cpf VARCHAR(14),
